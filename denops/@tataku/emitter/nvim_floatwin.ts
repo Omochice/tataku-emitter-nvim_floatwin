@@ -1,16 +1,21 @@
 import { Denops } from "https://deno.land/x/denops_std@v3.8.1/mod.ts";
 import { isString } from "https://deno.land/x/unknownutil@v2.0.0/mod.ts";
+import { Emitter } from "https://raw.githubusercontent.com/Omochice/tataku.vim/master/denops/tataku/interface.ts";
 
-export async function run(
-  denops: Denops,
-  options: Record<string, unkown>,
-  source: string[],
-): Promise<void> {
-  await denops.call(
-    "tataku#emitter#nvim_floatwin#open",
-    source,
-    { ...defaults, ...options },
-  );
+export default class implements Emitter {
+  constructor(private readonly option: Record<string, unknown>) {
+  }
+
+  async run(denops: Denops, source: string[]) {
+    await denops.call(
+      "tataku#emitter#nvim_floatwin#open",
+      source,
+      {
+        border: resolveBorder(this.option.border ?? defaults.border),
+        autoclose: this.option.autoclose ?? defaults.autoclose,
+      },
+    );
+  }
 }
 
 function resolveBorder(

@@ -1,4 +1,4 @@
-import { Denops } from "https://deno.land/x/denops_std@v5.0.0/mod.ts";
+import { Denops } from "https://deno.land/x/denops_std@v5.0.1/mod.ts";
 import { isString } from "https://deno.land/x/unknownutil@v2.1.1/mod.ts";
 import { Emitter } from "https://raw.githubusercontent.com/Omochice/tataku.vim/master/denops/tataku/interface.ts";
 

@@ -1,27 +1,19 @@
-import { Denops } from "https://deno.land/x/denops_std@v5.0.0/mod.ts";
-import { isString } from "https://deno.land/x/unknownutil@v2.1.1/mod.ts";
-import { Emitter } from "https://raw.githubusercontent.com/Omochice/tataku.vim/master/denops/tataku/interface.ts";
-
-export default class implements Emitter {
-  constructor(private readonly option: Record<string, unknown>) {
-  }
-
-  async run(denops: Denops, source: string[]) {
-    await denops.call(
-      "tataku#emitter#nvim_floatwin#open",
-      source,
-      {
-        border: resolveBorder(this.option.border ?? defaults.border),
-        autoclose: this.option.autoclose ?? defaults.autoclose,
-      },
-    );
-  }
-}
+import { Denops } from "https://deno.land/x/denops_std@v5.0.1/mod.ts";
+import {
+  $array,
+  $boolean,
+  $object,
+  $opt,
+  $string,
+  $union,
+  access,
+  type Infer,
+} from "https://esm.sh/lizod@0.2.4";
 
 function resolveBorder(
   border: Border,
-): string | [string, string, string, string, string, string, string, string] {
-  if (isString(border)) {
+): string | string[] {
+  if (typeof border === "string") {
     return border;
   }
   return directions.map((d) => border[d]);
@@ -32,10 +24,12 @@ const defaults: Required<Option> = {
   autoclose: true,
 };
 
-type Option = {
-  border?: Border;
-  autoclose?: boolean;
-};
+const isOption = $object({
+  border: $opt($union([$string, $array($string)])),
+  autoclose: $opt($boolean),
+});
+
+type Option = Infer<typeof isOption>;
 
 const directions = [
   "topleft",
@@ -56,3 +50,29 @@ type Border =
   | "solid"
   | "shadow"
   | Record<typeof directions[number], string>;
+
+const emitter = (denops: Denops, option: unknown) => {
+  const ctx = { errors: [] };
+  if (!isOption(option, ctx)) {
+    throw new Error(
+      ctx.errors
+        .map((err) => `error at ${err} ${access(option, err)}`)
+        .join("\n"),
+    );
+  }
+  return new WritableStream<string[]>({
+    write: async (chunk: string[]) => {
+      await denops.call(
+        "tataku#emitter#nvim_floatwin#open",
+        chunk,
+        {
+          // @ts-ignore: workaround
+          border: resolveBorder(option.border ?? defaults.border),
+          autoclose: option.autoclose ?? defaults.autoclose,
+        },
+      );
+    },
+  });
+};
+
+export default emitter;

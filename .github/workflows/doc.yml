@@ -16,11 +16,11 @@ jobs:
           RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.token }}" \
           "https://api.github.com/repos/${{ github.repository }}/branched/main")
           echo "::set-output name=isProtected::$(echo ${RESPONSE} | jq -r '.protected')"
-      - uses: Omochice/actions-normalize-vim-plugin-name@v0.1.0
+      - uses: Omochice/action-normalize-vim-plugin-name@v0.1.0
         id: normalize
         with:
           trim-tail-dot-vim: true
-      - uses: Omochice/actions-podeno@v0.1.0
+      - uses: Omochice/action-podeno@v0.1.0
         with:
           config: |
             [

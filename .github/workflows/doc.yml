@@ -15,7 +15,7 @@ jobs:
         run: |
           RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.token }}" \
           "https://api.github.com/repos/${{ github.repository }}/branched/main")
-          echo "::set-output name=isProtected::$(echo ${RESPONSE} | jq -r '.protected')"
+          echo "{isProtected}={$(echo ${RESPONSE} | jq -r '.protected')}" >> $GITHUB_OUTPUT
       - uses: Omochice/action-normalize-vim-plugin-name@v0.1.0
         id: normalize
         with:

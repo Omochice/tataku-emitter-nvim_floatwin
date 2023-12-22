@@ -14,8 +14,10 @@ jobs:
         id: branchCheck
         run: |
           RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.token }}" \
-          "https://api.github.com/repos/${{ github.repository }}/branched/main")
-          echo "{isProtected}={$(echo ${RESPONSE} | jq -r '.protected')}" >> $GITHUB_OUTPUT
+          "https://api.github.com/repos/${{ github.repository }}/branches/main")
+          PROTECTED=$(echo ${RESPONSE} | jq -r '.protected')
+          echo "${PROTECTED}"
+          echo "{isProtected}={${PROTECTED}}" >> $GITHUB_OUTPUT
       - uses: Omochice/action-normalize-vim-plugin-name@v0.1.0
         id: normalize
         with:

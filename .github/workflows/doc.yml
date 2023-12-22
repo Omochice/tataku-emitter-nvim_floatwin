@@ -33,12 +33,12 @@ jobs:
         run: test -f deno.lock && rm deno.lock || true
       - name: Create auto commit
         uses: stefanzweifel/git-auto-commit-action@v5
-        if: ${{ steps.branchCheck.outputs.isProtected != "true" }}
+        if: ${{ steps.branchCheck.outputs.isProtected != true }}
         with:
           commit_message: "docs: update docs"
           branch: ${{ github.head_ref }}
       - name: Create Pull Request
-        if: ${{ steps.branchCheck.outputs.isProtected == "true" }}
+        if: ${{ steps.branchCheck.outputs.isProtected == true }}
         uses: peter-evans/create-pull-request@v5
         with:
           title: "docs: update docs"

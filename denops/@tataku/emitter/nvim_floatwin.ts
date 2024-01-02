@@ -62,9 +62,12 @@ const emitter = (denops: Denops, option: unknown) => {
   }
   return new WritableStream<string[]>({
     write: async (chunk: string[]) => {
+      const lines = chunk.join("")
+        .trimEnd() // NOTE: to trim last newline
+        .split(/\r?\n/);
       await denops.call(
         "tataku#emitter#nvim_floatwin#open",
-        chunk,
+        lines,
         {
           // @ts-ignore: workaround
           border: resolveBorder(option.border ?? defaults.border),

@@ -8,7 +8,7 @@ import {
   $union,
   access,
   type Infer,
-} from "https://esm.sh/lizod@0.2.7/";
+} from "npm:lizod@0.2.7";
 
 function resolveBorder(
   border: Border,

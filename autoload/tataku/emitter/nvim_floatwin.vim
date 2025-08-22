@@ -1,7 +1,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-augroup tataku#nvim_floatwin
+augroup tataku.nvim_floatwin
   autocmd!
 augroup END
 
@@ -38,7 +38,7 @@ function! s:open(text, bufnr, options) abort
 
   if a:options.autoclose
     " NOTE: is giving `s:winid` redundant?
-    augroup tataku#nvim_floatwin
+    augroup tataku.nvim_floatwin
       autocmd CursorMoved,CursorMovedI,WinEnter * call s:close(s:winid)
     augroup END
   endif
@@ -86,7 +86,7 @@ function! s:close(winid) abort
   let l:curpos = getcurpos()
   if s:line !=# l:curpos[1] || s:col !=# l:curpos[2]
     call nvim_win_close(a:winid, v:false)
-    augroup tataku#nvim_floatwin
+    augroup tataku.nvim_floatwin
       autocmd!
     augroup END
   endif

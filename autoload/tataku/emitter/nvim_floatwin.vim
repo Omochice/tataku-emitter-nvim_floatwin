@@ -10,7 +10,6 @@ let s:BUFNAME = 'tataku-nvim_floatwin'
 
 function! s:open(text, bufnr, options) abort
   let l:is_ended_with_empty_line = a:text[-1] =~# '^\s*$'
-  call setbufvar(a:bufnr, '&buftype', 'nofile')
   " NOTE: if run without `silent` then echo `No lines in buffer`
   silent call deletebufline(a:bufnr, 1, '$')
   call setbufline(a:bufnr, 1, a:text)
@@ -69,11 +68,20 @@ function! s:update(text, bufnr, options) abort
   call nvim_win_set_height(s:winid, l:height)
 endfunction
 
+function! s:acquire_buffer() abort
+  let l:bufnr = bufnr(s:BUFNAME)
+  if l:bufnr !=# -1
+    return l:bufnr
+  endif
+  let l:bufnr = nvim_create_buf(v:false, v:true)
+  call nvim_buf_set_name(l:bufnr, s:BUFNAME)
+  return l:bufnr
+endfunction
+
 function! tataku#emitter#nvim_floatwin#open(text, options) abort
   let l:magic = &magic
   let &magic = v:true
-  let l:bufnr = bufnr(s:BUFNAME, v:true)
-  call bufload(l:bufnr)
+  let l:bufnr = s:acquire_buffer()
   if getwininfo(s:winid)->empty()
     call s:open(a:text, l:bufnr, a:options)
   else

@@ -17,6 +17,8 @@ The emitter module that use nvim floatwin for tataku.vim.
 
 =item * L<Options|tataku-emitter-nvim_floatwin-options>
 
+=item * L<Mappings|tataku-emitter-nvim_floatwin-mappings>
+
 =item * L<Samples|tataku-emitter-nvim_floatwin-samples>
 
 =back
@@ -41,7 +43,7 @@ This module has some options:
 
 =item * C<autoclose> X<tataku-emitter-nvim_floatwin-option-autoclose>
 
-  Close automaticaly when move cursor.
+  Close automatically when move cursor.
   Default: C<v:true>
 
 =item * C<border> X<tataku-emitter-nvim_floatwin-options-border>
@@ -62,6 +64,19 @@ This module has some options:
 =end typescript
 
 
+=head2 Mappings X<tataku-emitter-nvim_floatwin-mappings>
+
+This module provides below mappings:
+
+=over 0
+
+=item * C<E<lt>PlugE<gt>(tataku-emitter-nvim_floatwin-focus)> X<E<lt>PlugE<gt>(tataku-emitter-nvim_floatwin-focus)>
+
+  Move the cursor into the float window if it is shown.
+  The float window is not closed by C<autoclose> while the cursor is in it.
+
+=back
+
 =head2 Samples X<tataku-emitter-nvim_floatwin-samples>
 
 =begin vim
@@ -74,6 +89,8 @@ let g:tataku_recipes = #{
   \     },
   \   },
   \ }
+
+nmap <C-w>p <Plug>(tataku-emitter-nvim_floatwin-focus)
 
 =end vim
 

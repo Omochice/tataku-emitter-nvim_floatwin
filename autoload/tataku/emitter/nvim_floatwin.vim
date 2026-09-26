@@ -90,7 +90,18 @@ function! tataku#emitter#nvim_floatwin#open(text, options) abort
   let &magic = l:magic
 endfunction
 
+function! tataku#emitter#nvim_floatwin#focus() abort
+  if getwininfo(s:winid)->empty()
+    return
+  endif
+  call win_gotoid(s:winid)
+endfunction
+
 function! s:close(winid) abort
+  " NOTE: the cursor position inside the floatwin is unrelated to the one saved on open
+  if win_getid() ==# a:winid
+    return
+  endif
   let l:curpos = getcurpos()
   if s:line !=# l:curpos[1] || s:col !=# l:curpos[2]
     call nvim_win_close(a:winid, v:false)

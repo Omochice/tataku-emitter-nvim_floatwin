@@ -10,6 +10,7 @@ Contents ~
 
 - Dependencies |tataku-emitter-nvim_floatwin-dependencies|
 - Options |tataku-emitter-nvim_floatwin-options|
+- Mappings |tataku-emitter-nvim_floatwin-mappings|
 - Samples |tataku-emitter-nvim_floatwin-samples|
 
 Dependencies ~
@@ -27,7 +28,7 @@ This module has some options:
 
 - `autoclose` *tataku-emitter-nvim_floatwin-option-autoclose*
 
-  Close automaticaly when move cursor.
+  Close automatically when move cursor.
   Default: `v:true`
 - `border` *tataku-emitter-nvim_floatwin-options-border*
 
@@ -35,17 +36,27 @@ This module has some options:
   This should be `string`(ref: |nvim_open_win|)
   or `dictionary` that have below keys:
 
->
+>typescript
 	[
 		"topleft", "top", "topright", "right",
 		"bottomright", "bottom", "bottomleft", "left",
 	]
 <
 
+Mappings ~
+                                      *tataku-emitter-nvim_floatwin-mappings*
+
+This module provides below mappings:
+
+- `<Plug>(tataku-emitter-nvim_floatwin-focus)` *<Plug>(tataku-emitter-nvim_floatwin-focus)*
+
+  Move the cursor into the float window if it is shown.
+  The float window is not closed by `autoclose` while the cursor is in it.
+
 Samples ~
                                        *tataku-emitter-nvim_floatwin-samples*
 
->
+>vim
 	let g:tataku_recipes = #{
 	  \   sample: #{
 	  \     emitter: #{

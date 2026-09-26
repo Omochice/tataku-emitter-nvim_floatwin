@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/Omochice/tataku-emitter-nvim_floatwin/compare/v1.0.1...v1.1.0) (2026-09-26)
+
+
+### Features
+
+* add mapping to move the cursor into the float window ([#250](https://github.com/Omochice/tataku-emitter-nvim_floatwin/issues/250)) ([c7c1c22](https://github.com/Omochice/tataku-emitter-nvim_floatwin/commit/c7c1c2232f01cdab5997e6825d6c2d988d93238e))
+
 ## [1.0.1](https://github.com/Omochice/tataku-emitter-nvim_floatwin/compare/v1.0.0...v1.0.1) (2026-08-01)
 
 
